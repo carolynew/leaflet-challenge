@@ -12,6 +12,13 @@ d3.json(queryUrl, function(data) {
     // Define a function we want to run once for each feature in the features array
     // Give each feature a popup describing the place and time of the earthquake
     function onEachFeature(feature, layer) {
+      L.circle(feature.geometry.coordinates, {
+        fillOpacity: 0.75,
+        color: "white",
+        fillColor: color,
+        // Adjust radius
+        radius: feature.properties.mag * 1500
+        });
       layer.bindPopup("<h3>" + feature.properties.place +
         "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
         "<hr><p>" + feature.properties.mag + "</p>");
@@ -24,13 +31,7 @@ d3.json(queryUrl, function(data) {
     });
   
     // Add circles to map
-    // L.circle(feature.geometry.coordinates, {
-    //     fillOpacity: 0.75,
-    //     color: "white",
-    //     fillColor: color,
-    //     // Adjust radius
-    //     radius: feature.properties.mag * 1500
-    // });
+    // 
     // Sending our earthquakes layer to the createMap function
     createMap(earthquakes);
   }
@@ -64,25 +65,7 @@ d3.json(queryUrl, function(data) {
       layers: [streetmap, earthquakes]
     });
 
-    var color = "";
-    if (feature.properties.mag > 5) {
-        color = "red";
-    }
-    else if (feature.properties.mag > 4) {
-        color = "dark orange";
-    }
-    else if (feature.properties.mag > 3) {
-        color = "orange";
-    }
-    else if (feature.properties.mag > 2) {
-        color = "yellow";
-    }
-    else if (feature.properties.mag > 1) {
-        color = "yellow green";
-    }
-    else {
-        color = "green";
-    }
+
 
     
 }
